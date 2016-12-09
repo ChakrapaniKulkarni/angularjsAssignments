@@ -13,7 +13,6 @@ function LunchCheckController($scope,$filter){
 		var lunchItemslength;
 		if(lunchItemsStr!=undefined &&lunchItemsStr!=""){
 			lunchItemslength=splitString(lunchItemsStr,comma);
-			console.log(lunchItemslength);
 			if (lunchItemslength>3) {
 				$scope.alertMessage="Too much!";
 			}else{
