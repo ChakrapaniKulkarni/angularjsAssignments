@@ -11,7 +11,7 @@ function LunchCheckController($scope,$filter){
 	$scope.checkItems=function(){
 		var lunchItemsStr=$scope.lunchItems;
 		var lunchItemslength;
-		if(lunchItemsStr!=undefined &&lunchItemsStr!=""){
+		if(lunchItemsStr!=undefined && lunchItemsStr!=""){
 			lunchItemslength=splitString(lunchItemsStr,comma);
 			if (lunchItemslength>3) {
 				$scope.alertMessage="Too much!";
@@ -21,6 +21,9 @@ function LunchCheckController($scope,$filter){
 		}else{
 			$scope.alertMessage="Please enter data first";
 		}
+	};
+	$scope.messageClass=function(){
+		
 	};
 }
 
