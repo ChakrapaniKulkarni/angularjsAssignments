@@ -36,7 +36,7 @@
      <ul ng-repeat="item in toBuyController.itemsToBuy">
        <li>Buy {{item.quantity}}  {{item.name}} <button class="btn btn-default" ng-click=toBuyController.buy($index);><span class="glyphicon glyphicon-ok"></span> Bought</button></li>
      </ul>
-     <div ng-if="showMessageToBuy" class="emptyMessage">Everything is bought!</div>
+     <div ng-hide="toBuyController.itemsToBuy.length!=0" class="emptyMessage">Everything is bought!</div>
     </div>
 `
     <!-- Already Bought List -->
@@ -45,7 +45,7 @@
      <ul ng-repeat="alreadyBoughtItem in alreadyBoughtController.alreadyBoughtItems">
        <li>Bought {{alreadyBoughtItem.quantity}} {{alreadyBoughtItem.name}}</li>
      </ul>
-     <div ng-if="showMessageAlreadyBought" class="emptyMessage">Nothing bought yet.</div>
+     <div ng-hide="alreadyBoughtController.alreadyBoughtItems.length!=0" class="emptyMessage">Nothing bought yet.</div>
     </div>
   </div>
 </div>

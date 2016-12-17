@@ -7,27 +7,22 @@ angular.module("ShoppingListCheckOff",[])
 .service("ShoppingListCheckOffService",ShoppingListCheckOffService);
 
 
-ToBuyController.$inject=["ShoppingListCheckOffService","$scope"];
-function ToBuyController(ShoppingListCheckOffService,$scope){
+ToBuyController.$inject=["ShoppingListCheckOffService"];
+function ToBuyController(ShoppingListCheckOffService){
 	var itemsAdder=this;
 
-	itemsAdder.itemsToBuy=ShoppingListCheckOffService.getItemsToBuy();
-	$scope.showMessageToBuy=ShoppingListCheckOffService.getMessageForToBuy();
+	itemsAdder.itemsToBuy=ShoppingListCheckOffService.getItemsToBuy();	
 	itemsAdder.buy=function(itemIndex){
 		ShoppingListCheckOffService.buyItem(itemIndex);
-		$scope.showMessageToBuy=ShoppingListCheckOffService.getMessageForToBuy();
 	};
 }
 
 
-AlreadyBoughtController.$inject=["ShoppingListCheckOffService","$scope"]	;
-function AlreadyBoughtController(ShoppingListCheckOffService,$scope){
+AlreadyBoughtController.$inject=["ShoppingListCheckOffService"]	;
+function AlreadyBoughtController(ShoppingListCheckOffService){
 
 	var alreadyBought=this;
-
 	alreadyBought.alreadyBoughtItems=ShoppingListCheckOffService.getAlreadyBoughtitems();
-	$scope.showMessageAlreadyBought=ShoppingListCheckOffService.getMessageForAlreadyBought();
-	
 }
 
 function ShoppingListCheckOffService(){
@@ -38,11 +33,10 @@ function ShoppingListCheckOffService(){
 			,{ name: "Kurkure", quantity: 10 }];
 	//get All items
 	var alreadyBoughtList=[];
-	var messageFlag=false;
 	service.getItemsToBuy=function(){
 		return itemsToBuyList;
 	};
-
+	
 	service.buyItem=function(itemIndex){
 		alreadyBoughtList.push(itemsToBuyList[itemIndex]);
 		itemsToBuyList.splice(itemIndex,1);
@@ -50,17 +44,6 @@ function ShoppingListCheckOffService(){
 
 	service.getAlreadyBoughtitems=function(){
 		return alreadyBoughtList;
-	};
-
-	service.getMessageForToBuy=function(){
-		if(itemsToBuyList.length===0){
-			return true;
-		}
-	}
-	service.getMessageForAlreadyBought=function(){
-		if(alreadyBoughtList.length===0){
-			return true;
-		}
 	};
 }
 
