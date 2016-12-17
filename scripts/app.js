@@ -1,35 +1,49 @@
 (function(){
 	'use strict';
 
-angular.module("LunchCheck",[])
-.controller("LunchCheckController",LunchCheckController);
+angular.module("ShoppingListCheckOff",[])
+.controller("ToBuyController", ToBuyController)
+.controller("AlreadyBoughtController", AlreadyBoughtController)
+.service("ShoppingListCheckOffService",ShoppingListCheckOffService);
 
-LunchCheckController.$inject = ['$scope', '$filter'];
 
-function LunchCheckController($scope,$filter){
-	var comma = ',';
-	$scope.checkItems=function(){
-		var lunchItemsStr=$scope.lunchItems;
-		var lunchItemslength;
-		if(lunchItemsStr!=undefined && lunchItemsStr!=""){
-			lunchItemslength=splitString(lunchItemsStr,comma);
-			if (lunchItemslength>3) {
-				$scope.alertMessage="Too much!";
-			}else{
-				$scope.alertMessage="Enjoy!";
-			}	
-		}else{
-			$scope.alertMessage="Please enter data first";
-		}
-	};
-	$scope.messageClass=function(){
-		
+ToBuyController.$inject=["ShoppingListCheckOffService"];
+function ToBuyController(ShoppingListCheckOffService){
+	var itemsAdder=this;
+	itemsAdder.itemsToBuy=ShoppingListCheckOffService.getItemsToBuy();	
+	itemsAdder.buy=function(itemIndex){
+		ShoppingListCheckOffService.buyItem(itemIndex);
 	};
 }
 
-function splitString(stringToSplit, separator) {
-  var arrayOfStrings = stringToSplit.split(separator);
-  return arrayOfStrings.length;
+
+AlreadyBoughtController.$inject=["ShoppingListCheckOffService"]	;
+function AlreadyBoughtController(ShoppingListCheckOffService){
+
+	var alreadyBought=this;
+	alreadyBought.alreadyBoughtItems=ShoppingListCheckOffService.getAlreadyBoughtitems();
+}
+
+function ShoppingListCheckOffService(){
+	var service=this;
+	
+	var itemsToBuyList=[{ name: "cookies", quantity: 10 },{ name: "Lays chips", quantity: 5 }
+			,{ name: "crackers", quantity: 6 },{ name: "Parle-G", quantity: 10 }
+			,{ name: "Kurkure", quantity: 10 }];
+	//get All items
+	var alreadyBoughtList=[];
+	service.getItemsToBuy=function(){
+		return itemsToBuyList;
+	};
+	
+	service.buyItem=function(itemIndex){
+		alreadyBoughtList.push(itemsToBuyList[itemIndex]);
+		itemsToBuyList.splice(itemIndex,1);
+	}
+
+	service.getAlreadyBoughtitems=function(){
+		return alreadyBoughtList;
+	};
 }
 
 })();
